@@ -1,0 +1,50 @@
+# MERGE — politique lattice FAMILLE
+
+GARDE est le gardien. FAMILLE n'est pas un rail. Un bot = un rail.
+
+Carl merge. Le bot nie. Jamais l'inverse.
+
+## Ordre
+
+```
+PR  →  template + INTERDIT  →  CI garde verte  →  revue Carl  →  squash  →  main
+```
+
+Une branche à la fois. Squash only. Pas d'auto-merge. Dependabot parké.
+
+## Ce que GARDE doit nier (sinon le label FAMILLE est cassé)
+
+- quantique sans cartes QUELLE + TÉMOIN + EPSILON + HORIZON
+- ε = 0
+- loopholes fermés sans les trois + `simule: false`
+- CHSH logiciel écrit comme `di`
+- webcam / photon inventé écrit comme `qrng`
+- Job IBM / « quantum-safe » à la place d'une suite HORIZON nommée
+- date HORIZON absente ou déjà passée à l'écriture
+- FIGURE sans date de fin, ou mineur
+- SITUS médical, ou copie sans licence
+- mint / coin / token / L1
+- Unforge qui signe (le sas reste privé)
+- QUANTUM ou un transcript réel dans Git
+- merge Estoc dans le fichier
+- nouveau `*.grok.me` (un seul hôte live : acorn-royal-dune-blend.grok.me)
+- toucher `famille/site/` hors republish du même hôte
+
+## Repos
+
+| Action | Repos |
+|---|---|
+| Lattice — cette politique | garde, quelle, situs-protocol, figure-protocol, temoin-protocol, bruit-protocol, epsilon-protocol, horizon-protocol, mode-protocol, recu-protocol, dossier-protocol, unforge-check, unforge-press, unforge-trail, unforge-retract, formal-layer |
+| Code only, pas `data/` | unforge (privé) |
+| Hors file — ne pas merger ici | estoc-proto, contract, creatorflow, filon-noeud, filon-spec |
+| Carte, pas un rail — pas de bot FAMILLE | famille (`site/` publié : ne pas toucher) |
+
+## Développeurs
+
+1. Une PR, un rail, un INTERDIT cité.
+2. CI verte avant revue.
+3. Dependabot : ok seulement si le workflow du rail est vert et qu'aucun gabarit / schéma / INTERDIT n'est touché.
+4. Pas de matrix. Pas de self-hosted. Pas de nœud public.
+5. Squash. Message : `rail: ce que ça change`.
+
+X est une surface de publication. Ce n'est pas un backend à patcher.
