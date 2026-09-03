@@ -1,0 +1,8 @@
+{
+  "format": "epsilon.v0",
+  "epsilon_id": "EP-garde-zero",
+  "modele": "composable",
+  "epsilon": 0,
+  "simule": true,
+  "note": "claim only — the gate must deny ε=0"
+}

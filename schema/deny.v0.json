@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/carllaliberte/garde/schema/deny.v0.json",
+  "title": "GARDE deny verdict v0",
+  "description": "Fail-closed verdict. decision=allow only when no deny code fires. Unknown or unreadable input is deny.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "decision", "codes", "reasons", "fail_closed"],
+  "properties": {
+    "format": { "const": "garde.deny.v0" },
+    "decision": { "enum": ["allow", "deny"] },
+    "codes": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "FAIL_CLOSED",
+          "MALFORMED",
+          "EPSILON_ZERO",
+          "EPSILON_MISSING",
+          "QUANTUM_WITHOUT_CARDS",
+          "LOOPHOLES_CLOSED_INCOMPLETE",
+          "CHSH_SOFTWARE_AS_DI",
+          "PHOTON_INVENTED_AS_QRNG",
+          "OS_RELABEL_QKD",
+          "HORIZON_SLOGAN",
+          "HORIZON_DATE_INVALID",
+          "FIGURE_MINOR_OR_NO_END",
+          "SITUS_MEDICAL_OR_UNLICENSED",
+          "TOKEN_MINT_COIN",
+          "UNFORGE_SIGNS",
+          "QUANTUM_IN_GIT",
+          "ESTOC_MERGE",
+          "NEW_GROK_HOST",
+          "SECOND_SLUG",
+          "FAMILLE_SITE_TOUCHED"
+        ]
+      }
+    },
+    "reasons": { "type": "array", "items": { "type": "string" } },
+    "fail_closed": { "type": "boolean" },
+    "rail": { "type": ["string", "null"] },
+    "note": { "type": "string" },
+    "findings": { "type": "array" },
+    "root": { "type": "string" }
+  }
+}
