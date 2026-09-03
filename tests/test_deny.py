@@ -162,6 +162,28 @@ class DenyCriteria(unittest.TestCase):
         )
         self.assertTrue(verdict["fail_closed"])
 
+    def test_juge_empty_string_epsilon_fails_closed(self) -> None:
+        must_deny(
+            {
+                "quelle": "os",
+                "temoin": "aucun",
+                "epsilon": "",
+                "horizon": "2099-12-31",
+            },
+            "EPSILON_MISSING",
+        )
+        self.assertTrue(
+            deny(
+                {
+                    "quelle": "os",
+                    "temoin": "aucun",
+                    "epsilon": "",
+                    "horizon": "2099-12-31",
+                },
+                today=TODAY,
+            )["fail_closed"]
+        )
+
     def test_juge_null_epsilon_fails_closed(self) -> None:
         must_deny(
             {

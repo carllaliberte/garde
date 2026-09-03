@@ -116,8 +116,9 @@ Verified (read-only, 2026-09-03):
 
 Missing ε is **not aligned**. Until the SDK and the Worker share one rule,
 a **juge vocabulary** card (flat `quelle` ∈ os\|qrng\|qkd) with `epsilon`
-absent or null is `EPSILON_MISSING` — fail closed. That is deny-or-align,
-not an exploit recipe.
+absent, null, or `""` is `EPSILON_MISSING` — fail closed. That is deny-or-align,
+not an exploit recipe. (`""` is a manque in the SDK and a 400 on the Worker;
+GARDE does not collapse it into `EPSILON_ZERO`.)
 
 The epsilon **rail** (`format: epsilon.v0`, `modele: none`, `epsilon: null`)
 stays allowed. That is the honest default of that protocol, not the juge
