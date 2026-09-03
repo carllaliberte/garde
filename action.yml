@@ -1,0 +1,33 @@
+name: GARDE deny
+description: Fail closed if a FAMILLE-forbidden claim would pass. No exploits. No keys.
+author: Carl Laliberté
+branding:
+  icon: shield
+  color: gray-dark
+inputs:
+  carte:
+    description: Path to a JSON card or claim. Empty = scan only.
+    required: false
+    default: ""
+  root:
+    description: Repository root for the artifact scan
+    required: false
+    default: "."
+  python-version:
+    description: Python for the gate
+    required: false
+    default: "3.12"
+runs:
+  using: composite
+  steps:
+    - name: Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python-version }}
+    - name: Deny card
+      if: ${{ inputs.carte != '' }}
+      shell: bash
+      run: python3 "$GITHUB_ACTION_PATH/garde.py" deny --carte "${{ inputs.carte }}"
+    - name: Scan artifacts
+      shell: bash
+      run: python3 "$GITHUB_ACTION_PATH/garde.py" scan --root "${{ inputs.root }}"

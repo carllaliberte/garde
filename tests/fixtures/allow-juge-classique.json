@@ -1,0 +1,7 @@
+{
+  "quelle": "os",
+  "temoin": "aucun",
+  "epsilon": 0.000001,
+  "horizon": "2099-12-31",
+  "simule": true
+}

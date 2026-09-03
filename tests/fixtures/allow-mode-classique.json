@@ -1,0 +1,15 @@
+{
+  "format": "mode.v0",
+  "mode_id": "MD-garde-classique",
+  "mode": "classique",
+  "quelle_id": null,
+  "temoin_id": null,
+  "epsilon_id": null,
+  "horizon_id": null,
+  "raisons": ["quelle absente"],
+  "simule": true,
+  "juridiction": "QC",
+  "langue": "fr-CA",
+  "pose_at": "2026-09-03T00:00:00Z",
+  "note": "classique by default"
+}
