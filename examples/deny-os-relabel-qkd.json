@@ -1,0 +1,8 @@
+{
+  "format": "quelle.v0",
+  "id": "QL-garde-os-qkd-deny",
+  "source": "qkd",
+  "appareil": "os.urandom",
+  "simule": true,
+  "note": "claim only — software / os must not be labelled qkd"
+}

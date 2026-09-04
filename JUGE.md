@@ -32,8 +32,19 @@ Si une attaque passe, le label FAMILLE est cassé.
    Fixture : [examples/deny-flux-receipt.json](examples/deny-flux-receipt.json)
 8. **flux ancrage UFHY1** — `HORIZON_DATE_INVALID`. Suite ≠ calendar date.
    Fixture : [examples/deny-flux-ancrage-ufhy1.json](examples/deny-flux-ancrage-ufhy1.json)
+9. **ε absent sur carte juge** — `EPSILON_MISSING`. Fail closed until SDK=Worker.
+   Fixture : [examples/deny-epsilon-missing.json](examples/deny-epsilon-missing.json)
+10. **os relabel qkd** — `OS_RELABEL_QKD`. Software is not a photon link.
+   Fixture : [examples/deny-os-relabel-qkd.json](examples/deny-os-relabel-qkd.json)
+11. **horizon slogan** — `HORIZON_SLOGAN`. « quantum-safe » is not a suite.
+   Fixture : [examples/deny-horizon-slogan.json](examples/deny-horizon-slogan.json)
+12. **token / mint** — `TOKEN_MINT_COIN`. No coin on the lattice.
+   Fixture : [examples/deny-token-mint.json](examples/deny-token-mint.json)
+13. **Unforge that signs** — `UNFORGE_SIGNS`. The sas stays private.
+   Fixture : [examples/deny-unforge-signs.json](examples/deny-unforge-signs.json)
 
-Autres nies : di+simule, os relabel qkd, token, 2e slug, QUANTUM sur Git.
+Autres nies (tests, pas encore fixtures publiques) : di+simule,
+trous fermés incomplets, figure mineur, situs médical, 2e slug, QUANTUM sur Git.
 
 ```
 python3 garde.py deny --carte carte.json    # exit 0 allow | 2 deny

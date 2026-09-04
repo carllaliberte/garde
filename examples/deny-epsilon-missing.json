@@ -1,0 +1,8 @@
+{
+  "quelle": "os",
+  "temoin": "aucun",
+  "epsilon": null,
+  "horizon": "2099-12-31",
+  "simule": true,
+  "note": "claim only — juge card missing ε fails closed until SDK and Worker agree"
+}

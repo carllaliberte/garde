@@ -1,0 +1,9 @@
+{
+  "format": "horizon.v0",
+  "horizon_id": "HZ-garde-slogan-deny",
+  "cible": "unforge",
+  "suite": "quantum-safe",
+  "re_presser_avant": "2099-12-31",
+  "juridiction": "QC",
+  "note": "claim only — suite must be ed25519|UFHY1|mldsa87, never a slogan"
+}

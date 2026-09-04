@@ -62,9 +62,11 @@ python3 garde.py codes
 python3 -m unittest discover -s tests -v
 ```
 
-Red fixtures (each must deny): `examples/deny-epsilon-zero.json`,
-`examples/deny-photon-invente.json`, `examples/deny-preview-quittance.json`,
-`examples/deny-quantique-sans-bornes.json`, `examples/deny-ufhy1-as-date.json`.
+Red fixtures (each must deny; CI globs `examples/deny-*.json`):
+`deny-epsilon-zero`, `deny-epsilon-missing`, `deny-photon-invente`,
+`deny-os-relabel-qkd`, `deny-horizon-slogan`, `deny-preview-quittance`,
+`deny-quantique-sans-bornes`, `deny-ufhy1-as-date`, `deny-token-mint`,
+`deny-unforge-signs`, plus flux steward reds (`deny-flux-*`).
 See [JUGE.md](JUGE.md).
 
 Other protocol repos call this gate **without merging Git history**. See
