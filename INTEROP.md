@@ -6,6 +6,7 @@ Each stays in its own Git repository.
 ```
 famille                 vocabulary          schema/juge.v0.json
 quelle, temoin, …       emit a card         *.v0.json in that repo
+mesure, ancrage         satellite rails     consulter / re-mesurer
 GARDE                   deny / fail closed  this repo
 unforge (private)       may sign            never here
 QUANTUM                 local node          never in Git
