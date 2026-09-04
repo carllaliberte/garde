@@ -55,6 +55,15 @@ into one tree. Do not vendor `famille/site/`.
     root: .
 ```
 
+Satellite rails (pin ≥ `d18cc6540fd012377207253ddb13a7fb392a3f5a` — ANCRAGE/MESURE door on main):
+
+```yaml
+- uses: carllaliberte/garde@d18cc6540fd012377207253ddb13a7fb392a3f5a
+  with:
+    carte: examples/figure.ancrage.json
+    root: .
+```
+
 `carte` is optional. Without it, only the artifact scan runs.
 
 ### Checkout + CLI
