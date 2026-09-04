@@ -18,8 +18,8 @@ Si une attaque passe, le label FAMILLE est cassé.
 4. **quantique sans bornes** — `QUANTUM_WITHOUT_CARDS`.
    `quantique` sans QUELLE + TÉMOIN + EPSILON + HORIZON qui tiennent.
    Fixture : [examples/deny-quantique-sans-bornes.json](examples/deny-quantique-sans-bornes.json)
-5. **UFHY1 as a calendar date** — `HORIZON_DATE_INVALID`.
-   UFHY1 is a suite (Ed25519 + ML-DSA-65), never `YYYY-MM-DD`.
+5. **UFHY1 comme date de calendrier** — `HORIZON_DATE_INVALID`.
+   UFHY1 est une suite (Ed25519 + ML-DSA-65), jamais un jour `YYYY-MM-DD`.
    Fixture : [examples/deny-ufhy1-as-date.json](examples/deny-ufhy1-as-date.json)
 
 Autres nies : di+simule, os relabel qkd, token, 2e slug, QUANTUM sur Git.
