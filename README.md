@@ -81,8 +81,18 @@ Other protocol repos call this gate **without merging Git history**. See
 | [`MERGE.md`](MERGE.md) | squash, one branch, no auto-merge |
 | [`JUGE.md`](JUGE.md) | GARDE denies; it is not the juge |
 | [`BOTS.md`](BOTS.md) | no bot is owner; no bot merges |
+| [`LICENSE`](LICENSE) | MIT — this repo, not QUANTUM |
+| [`COPYRIGHT.md`](COPYRIGHT.md) | © 2026 Carl Laliberté, Québec |
 | [famille/GARDE.md](https://github.com/carllaliberte/famille/blob/main/GARDE.md) | page on the live host |
 | [famille/INTERDIT.md](https://github.com/carllaliberte/famille/blob/main/INTERDIT.md) | cadastre interdits |
 
 FAMILLE is not a rail. Do not open a FAMILLE bot. Do not add a second grok.me.
 Do not put QUANTUM or a real transcript in Git.
+
+## License
+
+MIT. See [LICENSE](LICENSE) and [COPYRIGHT.md](COPYRIGHT.md).
+
+This repository licenses the public deny gate. It does not license QUANTUM.
+Tests check that forbidden claims are refused. They do not formally verify
+the lattice.
