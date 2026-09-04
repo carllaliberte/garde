@@ -4,6 +4,23 @@ GARDE est le gardien. FAMILLE n'est pas un rail. Un bot = un rail.
 
 Carl merge. Le bot nie. Jamais l'inverse.
 
+
+## File — une PR
+
+Même usine que [famille/MERGE.md](https://github.com/carllaliberte/famille/blob/main/MERGE.md) :
+
+```
+PR ouverte → CI verte → Carl squash
+                 → pr_merged
+                      → SI déjà 1 PR ouverte sur CET immeuble : stop
+                      → SINON ouvrir 1 PR
+```
+
+- Carl squash. Grok Expert (goût) + Quantum (QC) avant. Pas d'auto-merge.
+- Dirty = fermer, recréer depuis main. Pas de rebase téléphone.
+- `lattice-relance` n'ouvre que si **0 PR ouvertes** sur la file lattice.
+- Interdit : 2e PR même repo · token · 2e slug · Estoc.
+
 ## Ordre
 
 ```
