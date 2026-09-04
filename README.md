@@ -27,10 +27,11 @@ They do not implement exploits, payloads, or attack procedures.
 | `PHOTON_INVENTED_AS_QRNG` | `source: qrng` without a named device, or webcam/software as qrng |
 | `OS_RELABEL_QKD` | software / `os` labelled `qkd` |
 | `HORIZON_SLOGAN` | “quantum-safe” / vendor job instead of `ed25519` \| `UFHY1` \| `mldsa87` |
-| `HORIZON_DATE_INVALID` | horizon date missing, unreadable, or not strictly after today |
+| `HORIZON_DATE_INVALID` | horizon date missing, unreadable, a suite name (`UFHY1` is not a date), or not strictly after today |
 | `FIGURE_MINOR_OR_NO_END` | figure of a minor, or no calendar end |
 | `SITUS_MEDICAL_OR_UNLICENSED` | medical situs usage, or a copy without a licence |
 | `TOKEN_MINT_COIN` | mint / coin / token / L1 |
+| `PREVIEW_AS_RECEIPT` | preview = quittance — a PREVIEW badge or GET `/juge` 200 is not a receipt |
 | `UNFORGE_SIGNS` | Unforge that signs (the sas stays private) |
 | `QUANTUM_IN_GIT` | QUANTUM node or a raw transcript body |
 | `ESTOC_MERGE` | Estoc merged into the file |
@@ -50,11 +51,16 @@ stdlib Python. No keys. No network.
 
 ```bash
 python3 garde.py deny --carte examples/classique.juge.json   # exit 0
-python3 garde.py deny --carte tests/fixtures/deny-epsilon-zero.json  # exit 2
+python3 garde.py deny --carte examples/deny-epsilon-zero.json  # exit 2
 python3 garde.py scan --root .
 python3 garde.py codes
 python3 -m unittest discover -s tests -v
 ```
+
+Red fixtures (each must deny): `examples/deny-epsilon-zero.json`,
+`examples/deny-photon-invente.json`, `examples/deny-preview-quittance.json`,
+`examples/deny-quantique-sans-bornes.json`, `examples/deny-ufhy1-as-date.json`.
+See [JUGE.md](JUGE.md).
 
 Other protocol repos call this gate **without merging Git history**. See
 [INTEROP.md](INTEROP.md). Pin a SHA:

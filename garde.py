@@ -68,6 +68,8 @@ MEDICAL_USAGES = frozenset(
         "pharmacie",
     }
 )
+PREVIEW_LABELS = frozenset({"preview", "aperçu", "apercu", "preview00001"})
+RECEIPT_LABELS = frozenset({"quittance", "receipt", "recu", "reçu", "recu.v0"})
 SOFTWARE_APPAREIL = (
     "os",
     "urandom",
@@ -109,6 +111,7 @@ CODES = (
     "FIGURE_MINOR_OR_NO_END",
     "SITUS_MEDICAL_OR_UNLICENSED",
     "TOKEN_MINT_COIN",
+    "PREVIEW_AS_RECEIPT",
     "UNFORGE_SIGNS",
     "QUANTUM_IN_GIT",
     "ESTOC_MERGE",
@@ -128,10 +131,11 @@ REASONS = {
     "PHOTON_INVENTED_AS_QRNG": "source=qrng without a named device, or webcam/software sold as qrng",
     "OS_RELABEL_QKD": "os (or software) labelled qkd",
     "HORIZON_SLOGAN": "horizon suite is a slogan or vendor job, not ed25519|UFHY1|mldsa87",
-    "HORIZON_DATE_INVALID": "horizon date missing, unreadable, or not strictly after today",
+    "HORIZON_DATE_INVALID": "horizon date missing, unreadable, a suite name (UFHY1 is not a date), or not strictly after today",
     "FIGURE_MINOR_OR_NO_END": "figure of a minor, or no calendar end date",
     "SITUS_MEDICAL_OR_UNLICENSED": "situs medical usage, or a copy without a licence",
     "TOKEN_MINT_COIN": "mint / coin / token / L1",
+    "PREVIEW_AS_RECEIPT": "preview ≠ quittance — a PREVIEW badge or GET /juge 200 is not a receipt",
     "UNFORGE_SIGNS": "unforge that signs — the sas stays private",
     "QUANTUM_IN_GIT": "QUANTUM node or a raw transcript body in the claim",
     "ESTOC_MERGE": "estoc merged into the file",
@@ -152,7 +156,19 @@ def _as_dict(obj: Any) -> dict[str, Any] | None:
 def _unwrap(obj: dict[str, Any]) -> dict[str, Any]:
     if obj.get("format") == "garde.claim.v0" and isinstance(obj.get("card"), dict):
         inner = dict(obj["card"])
-        for key in ("rail", "assert", "mode", "host", "slug", "slugs"):
+        for key in (
+            "rail",
+            "assert",
+            "mode",
+            "host",
+            "slug",
+            "slugs",
+            "preview",
+            "quittance",
+            "receipt",
+            "badge",
+            "status",
+        ):
             if key in obj and key not in inner:
                 inner[key] = obj[key]
         return inner
@@ -219,6 +235,36 @@ def _walk_strings(obj: Any) -> Iterable[str]:
 def _add(hits: list[str], code: str) -> None:
     if code not in hits:
         hits.append(code)
+
+
+def _is_preview_claim(obj: dict[str, Any]) -> bool:
+    if obj.get("preview") is True:
+        return True
+    for key in ("badge", "status", "kind", "type", "role"):
+        if _lower(obj.get(key)) in PREVIEW_LABELS:
+            return True
+    fmt = _lower(obj.get("format"))
+    return fmt.startswith("preview") or fmt.startswith("attest.preview")
+
+
+def _is_receipt_claim(obj: dict[str, Any]) -> bool:
+    if obj.get("quittance") is True or obj.get("receipt") is True:
+        return True
+    fmt = _lower(obj.get("format"))
+    if fmt == "recu.v0" or fmt.startswith("recu"):
+        return True
+    if _lower(obj.get("rail")) == "recu":
+        return True
+    for key in ("assert", "kind", "type", "role"):
+        if _lower(obj.get(key)) in RECEIPT_LABELS:
+            return True
+    return False
+
+
+def _check_preview_as_receipt(obj: dict[str, Any], hits: list[str]) -> None:
+    # Preview canal / badge presented as a receipt. Not an exploit recipe.
+    if _is_preview_claim(obj) and _is_receipt_claim(obj):
+        _add(hits, "PREVIEW_AS_RECEIPT")
 
 
 def _check_token(obj: dict[str, Any], hits: list[str]) -> None:
@@ -501,6 +547,7 @@ def deny(obj: Any, *, today: date | None = None) -> dict[str, Any]:
     card = _unwrap(obj)
     hits: list[str] = []
     _check_token(card, hits)
+    _check_preview_as_receipt(card, hits)
     _check_estoc(card, hits)
     _check_hosts(card, hits)
     _check_quantum_body(card, hits)

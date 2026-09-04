@@ -390,6 +390,126 @@ class DenyCriteria(unittest.TestCase):
             "SECOND_SLUG",
         )
 
+    def test_preview_as_quittance_on_recu(self) -> None:
+        must_deny(
+            {
+                "format": "recu.v0",
+                "preview": True,
+                "assert": "quittance",
+                "rail": "cash",
+                "montant_cents": 100,
+            },
+            "PREVIEW_AS_RECEIPT",
+        )
+
+    def test_preview_flag_plus_quittance_flag(self) -> None:
+        must_deny(
+            {
+                "preview": True,
+                "quittance": True,
+                "quelle": "os",
+                "temoin": "aucun",
+                "epsilon": 0.000001,
+                "horizon": "2099-12-31",
+            },
+            "PREVIEW_AS_RECEIPT",
+        )
+
+    def test_preview_badge_asserted_as_receipt(self) -> None:
+        must_deny(
+            {
+                "quelle": "os",
+                "temoin": "aucun",
+                "epsilon": 0.000001,
+                "horizon": "2099-12-31",
+                "badge": "PREVIEW",
+                "assert": "receipt",
+            },
+            "PREVIEW_AS_RECEIPT",
+        )
+
+    def test_claim_envelope_preview_as_quittance(self) -> None:
+        must_deny(
+            {
+                "format": "garde.claim.v0",
+                "preview": True,
+                "assert": "quittance",
+                "card": {
+                    "quelle": "os",
+                    "temoin": "aucun",
+                    "epsilon": 0.000001,
+                    "horizon": "2099-12-31",
+                },
+            },
+            "PREVIEW_AS_RECEIPT",
+        )
+
+    def test_ufhy1_as_horizon_date(self) -> None:
+        must_deny(
+            {
+                "quelle": "os",
+                "temoin": "aucun",
+                "epsilon": 0.000001,
+                "horizon": "UFHY1",
+            },
+            "HORIZON_DATE_INVALID",
+        )
+
+    def test_ufhy1_as_re_presser_avant(self) -> None:
+        must_deny(
+            {
+                "format": "horizon.v0",
+                "suite": "ed25519",
+                "re_presser_avant": "UFHY1",
+            },
+            "HORIZON_DATE_INVALID",
+        )
+
+
+class HonestPreviewAndReceiptStayDistinct(unittest.TestCase):
+    def test_preview_juge_without_quittance_is_allowed(self) -> None:
+        must_allow(
+            {
+                "preview": True,
+                "quelle": "os",
+                "temoin": "aucun",
+                "epsilon": 0.000001,
+                "horizon": "2099-12-31",
+            }
+        )
+
+    def test_honest_recu_without_preview_is_allowed(self) -> None:
+        must_allow(
+            {
+                "format": "recu.v0",
+                "rail": "cash",
+                "montant_cents": 100,
+                "devise": "CAD",
+            }
+        )
+
+
+class StewardRedFixtures(unittest.TestCase):
+    """The five attacks that must deny. If one passes, FAMILLE is broken."""
+
+    EXPECTED = {
+        "deny-epsilon-zero.json": "EPSILON_ZERO",
+        "deny-photon-invente.json": "PHOTON_INVENTED_AS_QRNG",
+        "deny-preview-quittance.json": "PREVIEW_AS_RECEIPT",
+        "deny-quantique-sans-bornes.json": "QUANTUM_WITHOUT_CARDS",
+        "deny-ufhy1-as-date.json": "HORIZON_DATE_INVALID",
+    }
+
+    def test_five_red_fixtures_exist(self) -> None:
+        names = sorted(p.name for p in (ROOT / "examples").glob("deny-*.json"))
+        self.assertEqual(names, sorted(self.EXPECTED))
+
+    def test_each_red_fixture_denies(self) -> None:
+        for name, code in self.EXPECTED.items():
+            with self.subTest(name=name, code=code):
+                claim = json.loads((ROOT / "examples" / name).read_text(encoding="utf-8"))
+                must_deny(claim, code)
+
 
 class Cli(unittest.TestCase):
     def test_allow_exit_0(self) -> None:
@@ -405,7 +525,7 @@ class Cli(unittest.TestCase):
 
     def test_deny_exit_2(self) -> None:
         proc = subprocess.run(
-            [sys.executable, str(ROOT / "garde.py"), "deny", "--carte", str(ROOT / "tests" / "fixtures" / "deny-epsilon-zero.json")],
+            [sys.executable, str(ROOT / "garde.py"), "deny", "--carte", str(ROOT / "examples" / "deny-epsilon-zero.json")],
             check=False,
             capture_output=True,
             text=True,
@@ -414,6 +534,27 @@ class Cli(unittest.TestCase):
         body = json.loads(proc.stdout)
         self.assertEqual(body["decision"], "deny")
         self.assertIn("EPSILON_ZERO", body["codes"])
+
+    def test_each_red_fixture_cli_exit_2(self) -> None:
+        expected = {
+            "deny-epsilon-zero.json": "EPSILON_ZERO",
+            "deny-photon-invente.json": "PHOTON_INVENTED_AS_QRNG",
+            "deny-preview-quittance.json": "PREVIEW_AS_RECEIPT",
+            "deny-quantique-sans-bornes.json": "QUANTUM_WITHOUT_CARDS",
+            "deny-ufhy1-as-date.json": "HORIZON_DATE_INVALID",
+        }
+        for name, code in expected.items():
+            with self.subTest(name=name, code=code):
+                proc = subprocess.run(
+                    [sys.executable, str(ROOT / "garde.py"), "deny", "--carte", str(ROOT / "examples" / name)],
+                    check=False,
+                    capture_output=True,
+                    text=True,
+                )
+                self.assertEqual(proc.returncode, 2, proc.stderr + proc.stdout)
+                body = json.loads(proc.stdout)
+                self.assertEqual(body["decision"], "deny")
+                self.assertIn(code, body["codes"])
 
     def test_stdin_malformed_exit_2(self) -> None:
         proc = subprocess.run(

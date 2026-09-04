@@ -1,0 +1,8 @@
+{
+  "format": "quelle.v0",
+  "id": "QL-garde-photon-deny",
+  "source": "qrng",
+  "simule": true,
+  "appareil": "webcam",
+  "note": "claim only — the gate must deny an invented photon"
+}

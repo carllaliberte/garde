@@ -1,0 +1,9 @@
+{
+  "format": "recu.v0",
+  "preview": true,
+  "assert": "quittance",
+  "rail": "cash",
+  "montant_cents": 100,
+  "devise": "CAD",
+  "note": "claim only — preview ≠ receipt; the gate must deny preview as quittance"
+}

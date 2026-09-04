@@ -1,0 +1,8 @@
+{
+  "quelle": "os",
+  "temoin": "aucun",
+  "epsilon": 0.000001,
+  "horizon": "UFHY1",
+  "simule": true,
+  "note": "claim only — UFHY1 is a suite, not a calendar date"
+}
