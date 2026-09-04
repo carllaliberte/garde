@@ -28,6 +28,8 @@ FAMILLE n'est pas un rail. Ne pas cocher FAMILLE.
 - [ ] pas de nouvel hôte grok.me
 - [ ] pas de `famille/site/` touché
 - [ ] ε = 0 refusé
+- [ ] preview ≠ quittance
+- [ ] UFHY1 n'est pas une date
 - [ ] classique par défaut
 
 ## CI

@@ -26,12 +26,20 @@ jobs:
         run: python3 -m unittest discover -s tests -v
       - name: allow fixture
         run: python3 garde.py deny --carte tests/fixtures/allow-quelle-os.json
-      - name: ε=0 must deny
+      - name: red fixtures must deny
         run: |
           set -e
-          if python3 garde.py deny --carte tests/fixtures/deny-epsilon-zero.json; then
-            echo "ε=0 passed the gate"
-            exit 1
-          fi
+          for carte in \
+            examples/deny-epsilon-zero.json \
+            examples/deny-photon-invente.json \
+            examples/deny-preview-quittance.json \
+            examples/deny-quantique-sans-bornes.json \
+            examples/deny-ufhy1-as-date.json
+          do
+            if python3 garde.py deny --carte "$carte"; then
+              echo "$carte passed the gate"
+              exit 1
+            fi
+          done
       - name: scan this repo
         run: python3 garde.py scan --root .

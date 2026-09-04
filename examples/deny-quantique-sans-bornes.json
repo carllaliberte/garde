@@ -1,0 +1,11 @@
+{
+  "format": "mode.v0",
+  "mode_id": "MD-garde-sans-bornes",
+  "mode": "quantique",
+  "quelle_id": null,
+  "temoin_id": null,
+  "epsilon_id": null,
+  "horizon_id": null,
+  "simule": true,
+  "note": "claim only — the gate must deny quantique without the four bounds"
+}

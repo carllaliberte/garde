@@ -27,6 +27,7 @@
           "FIGURE_MINOR_OR_NO_END",
           "SITUS_MEDICAL_OR_UNLICENSED",
           "TOKEN_MINT_COIN",
+          "PREVIEW_AS_RECEIPT",
           "UNFORGE_SIGNS",
           "QUANTUM_IN_GIT",
           "ESTOC_MERGE",
