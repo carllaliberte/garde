@@ -1,5 +1,10 @@
 # GARDE
 
+Les certitudes ont une date de fin. Certainties expire.
+
+VERT = match · AMBRE = satellite due · ROUGE = refuse.
+Preview ≠ receipt. Cursor calls the juge — is not the juge.
+
 **Attacks that must deny.** If one passes, the FAMILLE label is broken.
 
 GARDE is the public deny gate of the lattice. It is not a bot named FAMILLE,

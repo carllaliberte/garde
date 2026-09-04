@@ -1,5 +1,8 @@
 # Juge
 
+Les certitudes ont une date de fin. Certainties expire.
+GARDE denies; it is not the juge. Cursor calls `peut-dire` / this gate.
+
 GARDE n'est pas le juge. Il lit INTERDIT.md. Ici on nie.
 Si une attaque passe, le label FAMILLE est cassé.
 
