@@ -554,14 +554,19 @@ class StewardRedFixtures(unittest.TestCase):
     """Attacks that must deny. If one passes, FAMILLE is broken."""
 
     EXPECTED = {
+        "deny-epsilon-missing.json": "EPSILON_MISSING",
         "deny-epsilon-zero.json": "EPSILON_ZERO",
         "deny-flux-ancrage-ufhy1.json": "HORIZON_DATE_INVALID",
         "deny-flux-epsilon-zero.json": "EPSILON_ZERO",
         "deny-flux-receipt.json": "PREVIEW_AS_RECEIPT",
+        "deny-horizon-slogan.json": "HORIZON_SLOGAN",
+        "deny-os-relabel-qkd.json": "OS_RELABEL_QKD",
         "deny-photon-invente.json": "PHOTON_INVENTED_AS_QRNG",
         "deny-preview-quittance.json": "PREVIEW_AS_RECEIPT",
         "deny-quantique-sans-bornes.json": "QUANTUM_WITHOUT_CARDS",
+        "deny-token-mint.json": "TOKEN_MINT_COIN",
         "deny-ufhy1-as-date.json": "HORIZON_DATE_INVALID",
+        "deny-unforge-signs.json": "UNFORGE_SIGNS",
     }
 
     def test_red_fixtures_exist(self) -> None:
@@ -600,16 +605,7 @@ class Cli(unittest.TestCase):
         self.assertIn("EPSILON_ZERO", body["codes"])
 
     def test_each_red_fixture_cli_exit_2(self) -> None:
-        expected = {
-            "deny-epsilon-zero.json": "EPSILON_ZERO",
-            "deny-flux-ancrage-ufhy1.json": "HORIZON_DATE_INVALID",
-            "deny-flux-epsilon-zero.json": "EPSILON_ZERO",
-            "deny-flux-receipt.json": "PREVIEW_AS_RECEIPT",
-            "deny-photon-invente.json": "PHOTON_INVENTED_AS_QRNG",
-            "deny-preview-quittance.json": "PREVIEW_AS_RECEIPT",
-            "deny-quantique-sans-bornes.json": "QUANTUM_WITHOUT_CARDS",
-            "deny-ufhy1-as-date.json": "HORIZON_DATE_INVALID",
-        }
+        expected = dict(StewardRedFixtures.EXPECTED)
         for name, code in expected.items():
             with self.subTest(name=name, code=code):
                 proc = subprocess.run(
