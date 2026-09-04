@@ -15,6 +15,8 @@ Aucun bot n'est owner. Aucun bot ne merge. Aucun bot FAMILLE.
 | `bruit-pr` | PR ouverte sur bruit-protocol | app |
 | `epsilon-pr` | PR ouverte sur epsilon-protocol | app |
 | `horizon-pr` | PR ouverte sur horizon-protocol | app |
+| `mesure-pr` | PR ouverte sur mesure-protocol | app |
+| `ancrage-pr` | PR ouverte sur ancrage-protocol | app |
 | `quelle-ci-casse` | workflow garde fail (quelle) | app + mail |
 | `situs-*` / `unforge-*` | voir BOTS SITUS | — |
 | `github-revue-hebdo` | lundi 09:30 | app + mail |

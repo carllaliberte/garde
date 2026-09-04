@@ -34,7 +34,7 @@ Une branche à la fois. Squash only. Pas d'auto-merge. Dependabot parké.
 
 | Action | Repos |
 |---|---|
-| Lattice — cette politique | garde, quelle, situs-protocol, figure-protocol, temoin-protocol, bruit-protocol, epsilon-protocol, horizon-protocol, mode-protocol, recu-protocol, dossier-protocol, unforge-check, unforge-press, unforge-trail, unforge-retract, formal-layer |
+| Lattice — cette politique | garde, quelle, situs-protocol, figure-protocol, temoin-protocol, bruit-protocol, epsilon-protocol, horizon-protocol, mode-protocol, recu-protocol, dossier-protocol, mesure-protocol, ancrage-protocol, unforge-check, unforge-press, unforge-trail, unforge-retract, formal-layer, acorn-juge |
 | Code only, pas `data/` | unforge (privé) |
 | Hors file — ne pas merger ici | estoc-proto, contract, creatorflow, filon-noeud, filon-spec |
 | Carte, pas un rail — pas de bot FAMILLE | famille (`site/` publié : ne pas toucher) |
