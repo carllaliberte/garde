@@ -158,23 +158,32 @@ def _as_dict(obj: Any) -> dict[str, Any] | None:
 
 
 def _unwrap(obj: dict[str, Any]) -> dict[str, Any]:
+    envelope_keys = (
+        "rail",
+        "assert",
+        "mode",
+        "host",
+        "slug",
+        "slugs",
+        "preview",
+        "quittance",
+        "receipt",
+        "badge",
+        "status",
+    )
     if obj.get("format") == "garde.claim.v0" and isinstance(obj.get("card"), dict):
         inner = dict(obj["card"])
-        for key in (
-            "rail",
-            "assert",
-            "mode",
-            "host",
-            "slug",
-            "slugs",
-            "preview",
-            "quittance",
-            "receipt",
-            "badge",
-            "status",
-        ):
+        for key in envelope_keys:
             if key in obj and key not in inner:
                 inner[key] = obj[key]
+        return inner
+    # famille.flux.v0 — typed flux envelope; deny rules apply to nested carte
+    if obj.get("format") in {"famille.flux.v0", "flux.v0"} and isinstance(obj.get("carte"), dict):
+        inner = dict(obj["carte"])
+        for key in envelope_keys:
+            if key in obj and key not in inner:
+                inner[key] = obj[key]
+        inner.setdefault("format", "flux.v0")
         return inner
     return obj
 
@@ -185,6 +194,8 @@ def _rail_of(obj: dict[str, Any]) -> str | None:
         return "ancrage"
     if fmt in {"MESURE-v0", "mesure.v0"}:
         return "mesure"
+    if fmt in {"famille.flux.v0", "flux.v0"}:
+        return "flux"
     if isinstance(fmt, str) and fmt.endswith(".v0"):
         return fmt.split(".", 1)[0]
     if isinstance(obj.get("quelle"), str) and "temoin" in obj:
