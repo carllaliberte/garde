@@ -503,6 +503,31 @@ def _check_ancrage(obj: dict[str, Any], hits: list[str], today: date) -> None:
         _add(hits, "HORIZON_DATE_INVALID")
 
 
+def _check_flux_envelope(obj: dict[str, Any], hits: list[str]) -> None:
+    """famille.flux.v0 is preview-only. Nested ancrage dates are calendars, not suites."""
+    if obj.get("format") not in {"famille.flux.v0", "flux.v0"}:
+        return
+    # Schema: preview true, receipt false. A receipt bit on flux is a lie.
+    if obj.get("receipt") is True or obj.get("quittance") is True:
+        _add(hits, "PREVIEW_AS_RECEIPT")
+    sats = obj.get("satellites")
+    if not isinstance(sats, dict):
+        return
+    ancrage = sats.get("ancrage")
+    if isinstance(ancrage, dict):
+        avant = ancrage.get("re_mesurer_avant")
+        if isinstance(avant, str) and avant.strip() in HORIZON_SUITES:
+            _add(hits, "HORIZON_DATE_INVALID")
+        elif avant is not None and _parse_day(avant) is None:
+            _add(hits, "HORIZON_DATE_INVALID")
+    mesure = sats.get("mesure")
+    if isinstance(mesure, dict) and (
+        mesure.get("fork") is True or mesure.get("forker") is True
+    ):
+        # Flux v1: consulter destroys here / born there — no fork.
+        _add(hits, "FAIL_CLOSED")
+
+
 def _check_mesure(obj: dict[str, Any], hits: list[str]) -> None:
     """MESURE counts readings. It does not invent a qubit or a coin."""
     if not _is_mesure_card(obj):
@@ -622,6 +647,7 @@ def deny(obj: Any, *, today: date | None = None) -> dict[str, Any]:
     _check_bruit(card, hits)
     _check_figure(card, hits, today)
     _check_situs(card, hits)
+    _check_flux_envelope(obj, hits)
     _check_ancrage(card, hits, today)
     _check_mesure(card, hits)
     _check_quantum_claim(card, hits, today)
