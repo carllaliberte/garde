@@ -157,8 +157,19 @@ class HonestAllow(unittest.TestCase):
             }
         )
 
+    def test_flux_honest_preview(self) -> None:
+        must_allow(json.loads((ROOT / "examples" / "allow-flux.json").read_text(encoding="utf-8")))
+
+
 
 class DenyCriteria(unittest.TestCase):
+
+    def test_flux_nested_epsilon_zero(self) -> None:
+        must_deny(
+            json.loads((ROOT / "examples" / "deny-flux-epsilon-zero.json").read_text(encoding="utf-8")),
+            "EPSILON_ZERO",
+        )
+
     def test_epsilon_zero(self) -> None:
         must_deny({"format": "epsilon.v0", "modele": "composable", "epsilon": 0}, "EPSILON_ZERO")
 
@@ -528,17 +539,18 @@ class HonestPreviewAndReceiptStayDistinct(unittest.TestCase):
 
 
 class StewardRedFixtures(unittest.TestCase):
-    """The five attacks that must deny. If one passes, FAMILLE is broken."""
+    """Attacks that must deny. If one passes, FAMILLE is broken."""
 
     EXPECTED = {
         "deny-epsilon-zero.json": "EPSILON_ZERO",
+        "deny-flux-epsilon-zero.json": "EPSILON_ZERO",
         "deny-photon-invente.json": "PHOTON_INVENTED_AS_QRNG",
         "deny-preview-quittance.json": "PREVIEW_AS_RECEIPT",
         "deny-quantique-sans-bornes.json": "QUANTUM_WITHOUT_CARDS",
         "deny-ufhy1-as-date.json": "HORIZON_DATE_INVALID",
     }
 
-    def test_five_red_fixtures_exist(self) -> None:
+    def test_red_fixtures_exist(self) -> None:
         names = sorted(p.name for p in (ROOT / "examples").glob("deny-*.json"))
         self.assertEqual(names, sorted(self.EXPECTED))
 
@@ -576,6 +588,7 @@ class Cli(unittest.TestCase):
     def test_each_red_fixture_cli_exit_2(self) -> None:
         expected = {
             "deny-epsilon-zero.json": "EPSILON_ZERO",
+            "deny-flux-epsilon-zero.json": "EPSILON_ZERO",
             "deny-photon-invente.json": "PHOTON_INVENTED_AS_QRNG",
             "deny-preview-quittance.json": "PREVIEW_AS_RECEIPT",
             "deny-quantique-sans-bornes.json": "QUANTUM_WITHOUT_CARDS",

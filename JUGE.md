@@ -22,6 +22,10 @@ Si une attaque passe, le label FAMILLE est cassé.
    UFHY1 est une suite (Ed25519 + ML-DSA-65), jamais un jour `YYYY-MM-DD`.
    Fixture : [examples/deny-ufhy1-as-date.json](examples/deny-ufhy1-as-date.json)
 
+6. **flux ε=0 imbriqué** — `EPSILON_ZERO`.
+   `famille.flux.v0` unwrap `carte`. ε=0 nested is still a lie.
+   Fixture : [examples/deny-flux-epsilon-zero.json](examples/deny-flux-epsilon-zero.json)
+
 Autres nies : di+simule, os relabel qkd, token, 2e slug, QUANTUM sur Git.
 
 ```

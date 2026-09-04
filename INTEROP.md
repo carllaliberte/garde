@@ -11,6 +11,8 @@ mesure, ancrage         satellite rails     consulter / re-mesurer
 Honest satellite cards use hyphen formats (`MESURE-v0`, `ANCRAGE-v0`).
 GARDE must allow those when the card is sound. Preview ≠ receipt.
 Physique ≠ crypto. UFHY1 is not an `avant` date.
+Flux envelopes (`famille.flux.v0`) unwrap `carte`. Nested `epsilon: 0` denies. Preview ≠ receipt.
+
 GARDE                   deny / fail closed  this repo
 unforge (private)       may sign            never here
 QUANTUM                 local node          never in Git
