@@ -2,7 +2,7 @@
 
 Les certitudes ont une date de fin. Certainties expire.
 
-VERT = match · AMBRE = satellite due · ROUGE = refuse.
+VERT = match · AMBRE = match; a date is due again · ROUGE = refuse.
 Preview ≠ receipt. Cursor calls the juge — is not the juge.
 
 **Attacks that must deny.** If one passes, the FAMILLE label is broken.
