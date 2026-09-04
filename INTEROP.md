@@ -7,6 +7,10 @@ Each stays in its own Git repository.
 famille                 vocabulary          schema/juge.v0.json
 quelle, temoin, …       emit a card         *.v0.json in that repo
 mesure, ancrage         satellite rails     consulter / re-mesurer
+
+Honest satellite cards use hyphen formats (`MESURE-v0`, `ANCRAGE-v0`).
+GARDE must allow those when the card is sound. Preview ≠ receipt.
+Physique ≠ crypto. UFHY1 is not an `avant` date.
 GARDE                   deny / fail closed  this repo
 unforge (private)       may sign            never here
 QUANTUM                 local node          never in Git

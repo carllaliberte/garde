@@ -143,6 +143,20 @@ class HonestAllow(unittest.TestCase):
         card = json.loads((ROOT / "tests" / "fixtures" / "allow-quelle-os.json").read_text())
         must_allow({"format": "garde.claim.v0", "rail": "quelle", "card": card})
 
+    def test_ancrage_future_date(self) -> None:
+        must_allow({"format": "ANCRAGE-v0", "objet": "figure", "avant": "2028-08-31"})
+
+    def test_mesure_one_reading(self) -> None:
+        must_allow(
+            {
+                "format": "MESURE-v0",
+                "objet": "figure",
+                "lectures": 1,
+                "sha256": SHA,
+                "detruit": False,
+            }
+        )
+
 
 class DenyCriteria(unittest.TestCase):
     def test_epsilon_zero(self) -> None:
@@ -463,6 +477,30 @@ class DenyCriteria(unittest.TestCase):
                 "re_presser_avant": "UFHY1",
             },
             "HORIZON_DATE_INVALID",
+        )
+
+    def test_ancrage_ufhy1_as_avant(self) -> None:
+        must_deny(
+            {"format": "ANCRAGE-v0", "objet": "figure", "avant": "UFHY1"},
+            "HORIZON_DATE_INVALID",
+        )
+
+    def test_ancrage_past_avant(self) -> None:
+        must_deny(
+            {"format": "ANCRAGE-v0", "objet": "figure", "avant": "2020-01-01"},
+            "HORIZON_DATE_INVALID",
+        )
+
+    def test_mesure_di_invented(self) -> None:
+        must_deny(
+            {
+                "format": "MESURE-v0",
+                "objet": "figure",
+                "lectures": 1,
+                "sha256": SHA,
+                "temoin": "di",
+            },
+            "PHOTON_INVENTED_AS_QRNG",
         )
 
 

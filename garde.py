@@ -35,6 +35,10 @@ CARD_FORMATS = frozenset(
         "famille.juge.v0",
         "situs.v0",
         "situs-annuaire.v0",
+        "ANCRAGE-v0",
+        "ancrage.v0",
+        "MESURE-v0",
+        "mesure.v0",
     }
 )
 TOKEN_KEYS = frozenset(
@@ -177,6 +181,10 @@ def _unwrap(obj: dict[str, Any]) -> dict[str, Any]:
 
 def _rail_of(obj: dict[str, Any]) -> str | None:
     fmt = obj.get("format")
+    if fmt in {"ANCRAGE-v0", "ancrage.v0"}:
+        return "ancrage"
+    if fmt in {"MESURE-v0", "mesure.v0"}:
+        return "mesure"
     if isinstance(fmt, str) and fmt.endswith(".v0"):
         return fmt.split(".", 1)[0]
     if isinstance(obj.get("quelle"), str) and "temoin" in obj:
@@ -461,6 +469,45 @@ def _check_figure(obj: dict[str, Any], hits: list[str], today: date) -> None:
         _add(hits, "FIGURE_MINOR_OR_NO_END")
 
 
+def _is_ancrage_card(obj: dict[str, Any]) -> bool:
+    fmt = obj.get("format")
+    return fmt in {"ANCRAGE-v0", "ancrage.v0"} or _lower(obj.get("rail")) == "ancrage"
+
+
+def _is_mesure_card(obj: dict[str, Any]) -> bool:
+    fmt = obj.get("format")
+    return fmt in {"MESURE-v0", "mesure.v0"} or _lower(obj.get("rail")) == "mesure"
+
+
+def _check_ancrage(obj: dict[str, Any], hits: list[str], today: date) -> None:
+    """ANCRAGE is a re-measure date. Physique ≠ crypto. UFHY1 is not a date."""
+    if not _is_ancrage_card(obj):
+        return
+    avant = obj.get("avant")
+    if isinstance(avant, str) and avant.strip() in HORIZON_SUITES:
+        _add(hits, "HORIZON_DATE_INVALID")
+        return
+    day = _parse_day(avant)
+    if day is None or day <= today:
+        _add(hits, "HORIZON_DATE_INVALID")
+
+
+def _check_mesure(obj: dict[str, Any], hits: list[str]) -> None:
+    """MESURE counts readings. It does not invent a qubit or a coin."""
+    if not _is_mesure_card(obj):
+        return
+    if not _is_sha256(obj.get("sha256")):
+        _add(hits, "FAIL_CLOSED")
+    lectures = obj.get("lectures")
+    if not isinstance(lectures, int) or lectures < 0:
+        _add(hits, "FAIL_CLOSED")
+    niveau = _lower(obj.get("temoin") or obj.get("niveau") or obj.get("di"))
+    if niveau == "di" or obj.get("chsh") is not None or obj.get("photon") is True:
+        _add(hits, "PHOTON_INVENTED_AS_QRNG")
+    if _lower(obj.get("assert")) in {"monnaie", "coin", "token"} or obj.get("monnaie") is True:
+        _add(hits, "TOKEN_MINT_COIN")
+
+
 def _usages_of(obj: dict[str, Any]) -> list[str]:
     raw = obj.get("usages") or obj.get("usage")
     if isinstance(raw, str):
@@ -564,6 +611,8 @@ def deny(obj: Any, *, today: date | None = None) -> dict[str, Any]:
     _check_bruit(card, hits)
     _check_figure(card, hits, today)
     _check_situs(card, hits)
+    _check_ancrage(card, hits, today)
+    _check_mesure(card, hits)
     _check_quantum_claim(card, hits, today)
     if not _recognized(card) and not hits:
         _add(hits, "FAIL_CLOSED")
