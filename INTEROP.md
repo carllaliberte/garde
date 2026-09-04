@@ -92,6 +92,23 @@ verdict = deny(card)          # dict → garde.deny.v0
 # exit 0 allow, exit 2 deny
 ```
 
+
+## Cursor consumes the juge
+
+Human phrase first ([famille EXPERIENCE.md](https://github.com/carllaliberte/famille/blob/main/EXPERIENCE.md)).
+Then the contract walk: [famille examples/interop-juge-v0.md](https://github.com/carllaliberte/famille/blob/main/examples/interop-juge-v0.md).
+
+```bash
+# honest phone / classique with ε>0 and a calendar horizon
+python3 garde.py deny --carte examples/classique.juge.json   # exit 0
+
+# famille attest-os.json uses ε null + empty horizon → classique in SDK,
+# Worker 400, GARDE EPSILON_MISSING until those two agree (do not unwind d55799e)
+```
+
+GARDE answers only: would allowing this claim break FAMILLE?
+`peut-dire` answers MODE. Do not merge the two questions.
+
 ## What GARDE does not do
 
 | Actor | Role |
