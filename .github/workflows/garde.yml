@@ -29,17 +29,15 @@ jobs:
       - name: red fixtures must deny
         run: |
           set -e
-          for carte in \
-            examples/deny-epsilon-zero.json \
-            examples/deny-photon-invente.json \
-            examples/deny-preview-quittance.json \
-            examples/deny-quantique-sans-bornes.json \
-            examples/deny-ufhy1-as-date.json
-          do
-            if python3 garde.py deny --carte "$carte"; then
+          shopt -s nullglob
+          cartes=(examples/deny-*.json)
+          test "${#cartes[@]}" -ge 8
+          for carte in "${cartes[@]}"; do
+            if python3 garde.py deny --carte "$carte" >/dev/null; then
               echo "$carte passed the gate"
               exit 1
             fi
+            echo "deny ok: $carte"
           done
       - name: scan this repo
         run: python3 garde.py scan --root .
