@@ -170,6 +170,18 @@ class DenyCriteria(unittest.TestCase):
             "EPSILON_ZERO",
         )
 
+    def test_flux_receipt_bit(self) -> None:
+        must_deny(
+            json.loads((ROOT / "examples" / "deny-flux-receipt.json").read_text(encoding="utf-8")),
+            "PREVIEW_AS_RECEIPT",
+        )
+
+    def test_flux_ancrage_ufhy1(self) -> None:
+        must_deny(
+            json.loads((ROOT / "examples" / "deny-flux-ancrage-ufhy1.json").read_text(encoding="utf-8")),
+            "HORIZON_DATE_INVALID",
+        )
+
     def test_epsilon_zero(self) -> None:
         must_deny({"format": "epsilon.v0", "modele": "composable", "epsilon": 0}, "EPSILON_ZERO")
 
@@ -543,7 +555,9 @@ class StewardRedFixtures(unittest.TestCase):
 
     EXPECTED = {
         "deny-epsilon-zero.json": "EPSILON_ZERO",
+        "deny-flux-ancrage-ufhy1.json": "HORIZON_DATE_INVALID",
         "deny-flux-epsilon-zero.json": "EPSILON_ZERO",
+        "deny-flux-receipt.json": "PREVIEW_AS_RECEIPT",
         "deny-photon-invente.json": "PHOTON_INVENTED_AS_QRNG",
         "deny-preview-quittance.json": "PREVIEW_AS_RECEIPT",
         "deny-quantique-sans-bornes.json": "QUANTUM_WITHOUT_CARDS",
@@ -588,7 +602,9 @@ class Cli(unittest.TestCase):
     def test_each_red_fixture_cli_exit_2(self) -> None:
         expected = {
             "deny-epsilon-zero.json": "EPSILON_ZERO",
+            "deny-flux-ancrage-ufhy1.json": "HORIZON_DATE_INVALID",
             "deny-flux-epsilon-zero.json": "EPSILON_ZERO",
+            "deny-flux-receipt.json": "PREVIEW_AS_RECEIPT",
             "deny-photon-invente.json": "PHOTON_INVENTED_AS_QRNG",
             "deny-preview-quittance.json": "PREVIEW_AS_RECEIPT",
             "deny-quantique-sans-bornes.json": "QUANTUM_WITHOUT_CARDS",

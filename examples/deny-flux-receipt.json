@@ -1,0 +1,11 @@
+{
+  "format": "famille.flux.v0",
+  "carte": {
+    "quelle": "os",
+    "temoin": "aucun",
+    "epsilon": 1e-6,
+    "horizon": "2027-12-31"
+  },
+  "preview": true,
+  "receipt": true
+}

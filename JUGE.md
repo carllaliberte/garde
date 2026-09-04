@@ -25,6 +25,10 @@ Si une attaque passe, le label FAMILLE est cassé.
 6. **flux ε=0 imbriqué** — `EPSILON_ZERO`.
    `famille.flux.v0` unwrap `carte`. ε=0 nested is still a lie.
    Fixture : [examples/deny-flux-epsilon-zero.json](examples/deny-flux-epsilon-zero.json)
+7. **flux receipt** — `PREVIEW_AS_RECEIPT`. Flux is preview-only.
+   Fixture : [examples/deny-flux-receipt.json](examples/deny-flux-receipt.json)
+8. **flux ancrage UFHY1** — `HORIZON_DATE_INVALID`. Suite ≠ calendar date.
+   Fixture : [examples/deny-flux-ancrage-ufhy1.json](examples/deny-flux-ancrage-ufhy1.json)
 
 Autres nies : di+simule, os relabel qkd, token, 2e slug, QUANTUM sur Git.
 

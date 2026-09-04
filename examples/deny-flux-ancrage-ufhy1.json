@@ -1,0 +1,14 @@
+{
+  "format": "famille.flux.v0",
+  "carte": {
+    "quelle": "os",
+    "temoin": "aucun",
+    "epsilon": 1e-6,
+    "horizon": "2027-12-31"
+  },
+  "satellites": {
+    "ancrage": { "re_mesurer_avant": "UFHY1" }
+  },
+  "preview": true,
+  "receipt": false
+}
