@@ -60,7 +60,7 @@ Si une attaque passe, le label FAMILLE est cassé.
 Autres nies (scan / tests, pas de fixture publique — le scan du dépôt
 refuserait un hôte extra) : 2e slug (`SECOND_SLUG`,
 `tests/fixtures/deny-second-slug.json`), `famille/site/`
-(`FAMILLE_SITE_TOUCHED`, `test_famille_site_touched_via_scan`).
+(`FAMILLE_SITE_TOUCHED`, `test_famille_site_touched` / scan catalog).
 
 ```
 python3 garde.py deny --carte carte.json    # exit 0 allow | 2 deny

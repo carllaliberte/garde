@@ -27,6 +27,19 @@ def must_deny(claim: dict, code: str) -> None:
     assert verdict["format"] == "garde.deny.v0"
 
 
+def must_deny_scan(rel: tuple[str, ...], code: str) -> None:
+    """Scan-only listed codes (no claim recipe). Temp tree, then scan()."""
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        path = root.joinpath(*rel)
+        path.parent.mkdir(parents=True)
+        path.write_text("placeholder\n", encoding="utf-8")
+        verdict = scan(root)
+        assert verdict["decision"] == "deny", verdict
+        assert code in verdict["codes"], verdict
+        assert verdict["format"] == "garde.deny.v0"
+
+
 def must_allow(claim: dict) -> None:
     verdict = deny(claim, today=TODAY)
     assert verdict["decision"] == "allow", verdict
@@ -541,6 +554,9 @@ class DenyCriteria(unittest.TestCase):
             "PHOTON_INVENTED_AS_QRNG",
         )
 
+    def test_famille_site_touched(self) -> None:
+        must_deny_scan(("famille", "site", "index.html"), "FAMILLE_SITE_TOUCHED")
+
 
 class HonestPreviewAndReceiptStayDistinct(unittest.TestCase):
     def test_preview_juge_without_quittance_is_allowed(self) -> None:
@@ -604,6 +620,10 @@ class StewardRedFixtures(unittest.TestCase):
         "deny-juge-200-as-receipt.json": "PREVIEW_AS_RECEIPT",
     }
 
+    SCAN_EXPECTED = {
+        "FAMILLE_SITE_TOUCHED": ("famille", "site", "index.html"),
+    }
+
     def test_red_fixtures_exist(self) -> None:
         names = sorted(p.name for p in (ROOT / "examples").glob("deny-*.json"))
         self.assertEqual(names, sorted(self.EXPECTED))
@@ -613,6 +633,11 @@ class StewardRedFixtures(unittest.TestCase):
             with self.subTest(name=name, code=code):
                 claim = json.loads((ROOT / "examples" / name).read_text(encoding="utf-8"))
                 must_deny(claim, code)
+
+    def test_each_scan_red_denies(self) -> None:
+        for code, rel in self.SCAN_EXPECTED.items():
+            with self.subTest(code=code):
+                must_deny_scan(rel, code)
 
 
 class Cli(unittest.TestCase):

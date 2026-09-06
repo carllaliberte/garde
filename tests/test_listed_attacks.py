@@ -103,7 +103,11 @@ LISTED_CLAIMS: dict[str, dict] = {
     },
 }
 
-SCAN_ONLY = frozenset({"FAMILLE_SITE_TOUCHED"})
+# Scan-only listed codes — same catalog shape as LISTED_CLAIMS.
+# Rel paths are probes for scan(), not exploit recipes.
+LISTED_SCANS: dict[str, tuple[str, ...]] = {
+    "FAMILLE_SITE_TOUCHED": ("famille", "site", "index.html"),
+}
 
 
 def _readme_listed_codes() -> list[str]:
@@ -133,7 +137,7 @@ class ListedCatalogComplete(unittest.TestCase):
         self.assertEqual(set(CODES), set(listed), (set(CODES) - set(listed), set(listed) - set(CODES)))
 
     def test_every_listed_code_has_a_refuse_probe(self) -> None:
-        covered = set(LISTED_CLAIMS) | SCAN_ONLY
+        covered = set(LISTED_CLAIMS) | set(LISTED_SCANS)
         self.assertEqual(set(CODES), covered)
 
     def test_each_listed_claim_still_refuses(self) -> None:
@@ -144,10 +148,24 @@ class ListedCatalogComplete(unittest.TestCase):
                 self.assertIn(code, verdict["codes"], verdict)
                 self.assertEqual(verdict["format"], "garde.deny.v0")
 
-    def test_famille_site_touched_via_scan(self) -> None:
+    def test_each_listed_scan_still_refuses(self) -> None:
+        for code, rel in LISTED_SCANS.items():
+            with self.subTest(code=code):
+                with tempfile.TemporaryDirectory() as tmp:
+                    root = Path(tmp)
+                    path = root.joinpath(*rel)
+                    path.parent.mkdir(parents=True)
+                    path.write_text("placeholder\n", encoding="utf-8")
+                    verdict = scan(root)
+                    self.assertEqual(verdict["decision"], "deny", verdict)
+                    self.assertIn(code, verdict["codes"], verdict)
+                    self.assertEqual(verdict["format"], "garde.deny.v0")
+
+    def test_famille_site_touched(self) -> None:
+        rel = LISTED_SCANS["FAMILLE_SITE_TOUCHED"]
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            path = root / "famille" / "site" / "index.html"
+            path = root.joinpath(*rel)
             path.parent.mkdir(parents=True)
             path.write_text("placeholder\n", encoding="utf-8")
             verdict = scan(root)
