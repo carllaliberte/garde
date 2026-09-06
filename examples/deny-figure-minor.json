@@ -1,0 +1,10 @@
+{
+  "format": "figure.v0",
+  "figure_id": "FG-garde-minor-deny",
+  "nom_public": "Exemple",
+  "majeur": false,
+  "usages": ["nom"],
+  "fin": "2099-12-31",
+  "revocable": true,
+  "note": "claim only — figure of a minor must deny"
+}

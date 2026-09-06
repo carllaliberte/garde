@@ -1,0 +1,7 @@
+{
+  "format": "situs.v0",
+  "situs_id": "ST-garde-medical-deny",
+  "usages": ["medical"],
+  "nom_public": "exemple",
+  "note": "claim only — medical situs usage must deny"
+}

@@ -1,0 +1,10 @@
+{
+  "format": "bruit.v0",
+  "bruit_id": "BR-garde-trous-deny",
+  "trous": "fermes",
+  "detection": "fermee",
+  "localite": "fermee",
+  "liberte": "fermee",
+  "simule": true,
+  "note": "claim only — trous fermés while simulated must deny"
+}
