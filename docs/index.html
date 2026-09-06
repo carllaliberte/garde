@@ -3,29 +3,60 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="theme-color" content="#0b0b0a"/>
+<meta name="description" content="Garde — une PR, un humain squash. Preview n’est pas une quittance."/>
 <title>Garde</title>
 <style>
-body{margin:0;font:18px/1.45 Georgia,serif;background:#111;color:#eee;padding:2rem}
-main{max-width:36rem}
-h1{font-weight:400;letter-spacing:.04em}
-.price{margin:1.5rem 0;padding:1rem;border:1px solid #444}
-a{color:#e0b36a}
-.muted{color:#999;font-size:.9rem}
+:root{
+  --bg:#0b0b0a;--ink:#f4efe6;--muted:#b9a78c;--gold:#c4a36a;
+  --line:#3a342c;--ok:#3f6b4a;--no:#8b2e2e;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.5 "Source Serif 4",Georgia,serif}
+a{color:var(--gold)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.skip{position:absolute;left:-999px;top:0;background:var(--gold);color:#111;padding:.5rem 1rem}
+.skip:focus{left:1rem;top:1rem;z-index:2}
+header,main,footer{max-width:40rem;margin:0 auto;padding:1.25rem}
+.hero-photo{width:100%;height:12rem;object-fit:cover;border:1px solid var(--line);display:block}
+.card{width:100%;max-width:16rem;margin:1.5rem auto;display:block;border:1px solid var(--line)}
+h1{font-weight:500;letter-spacing:.03em;font-size:1.75rem}
+.tag{color:var(--muted);font-size:.95rem}
+.prices{border:1px solid var(--line);padding:1rem;margin:1.5rem 0}
+.prices p{margin:.4rem 0}
+pre,code{font:14px/1.4 ui-monospace,Menlo,monospace;background:#161410;padding:.2rem .35rem}
+pre{padding:1rem;overflow:auto;border:1px solid var(--line)}
+.lock{color:var(--muted);font-size:.85rem}
 </style>
 </head>
 <body>
-<main>
+<a class="skip" href="#contenu">Aller au contenu</a>
+<header>
+<p class="tag">Les certitudes ont une date de fin.</p>
 <h1>Garde</h1>
-<p>Une PR. Un humain squash. Le bot refuse ε = 0.</p>
-<p class="muted">Pas QUANTUM. Preview n’est pas une quittance.</p>
-<div class="price">
-<p>Public Action — 0 $</p>
+<p>Une PR. Un humain squash. Le bot refuse une marge d’erreur nulle.</p>
+</header>
+<main id="contenu">
+<img class="hero-photo" src="https://raw.githubusercontent.com/carllaliberte/famille/main/site/imagine/2026-09-04/photo-hands.png" width="1200" height="800" alt="Mains posant une carte papier au crépuscule, lumière champagne."/>
+<img class="card" src="https://raw.githubusercontent.com/carllaliberte/famille/main/site/imagine/2026-09-04/still-card.png" width="800" height="1000" alt="Carte de poche, champ date vide. Aperçu, pas un reçu."/>
+<p class="lock">Preview ≠ receipt. L’aperçu n’est pas une quittance.</p>
+<div class="prices" aria-label="Tarifs">
+<p>Action publique — 0 $</p>
 <p>Équipe — 29 $ / siège / mois</p>
 <p>Cabinet — 99 $ / siège / mois</p>
 </div>
-<p>Install aujourd’hui :</p>
-<pre>- uses: carllaliberte/garde@489629f</pre>
-<p><a href="https://github.com/carllaliberte/garde">Repo</a> · <a href="https://acorn-juge.laliberte22.workers.dev/juge?quelle=os&amp;temoin=aucun&amp;epsilon=0&amp;horizon=2027-12-31">Juge</a></p>
+<p>Install</p>
+<pre><code>- uses: carllaliberte/garde@400c3965399bbaf7ec934bb93ced936ab40479c3
+  with:
+    carte: examples/classique.juge.json</code></pre>
+<p>
+  <a href="https://github.com/carllaliberte/garde">Dépôt</a>
+  ·
+  <a href="https://acorn-juge.laliberte22.workers.dev/juge?quelle=os&amp;temoin=aucun&amp;epsilon=0&amp;horizon=2027-12-31">Juge (aperçu)</a>
+</p>
 </main>
+<footer>
+<p class="lock">© 2026 Carl Laliberté. MIT sur ce dépôt. Pas une chaîne. Pas de monnaie.</p>
+</footer>
 </body>
 </html>
