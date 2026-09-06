@@ -1,0 +1,9 @@
+{
+  "format": "temoin.v0",
+  "temoin_id": "TM-garde-di-simule-deny",
+  "niveau": "di",
+  "simule": true,
+  "transcript_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "chsh": 2.4,
+  "note": "claim only — temoin di with simule must deny"
+}

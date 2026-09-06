@@ -1,0 +1,11 @@
+{
+  "quelle": "os",
+  "temoin": "aucun",
+  "epsilon": 0.000001,
+  "horizon": "2099-12-31",
+  "path": "/juge",
+  "status": 200,
+  "assert": "quittance",
+  "simule": true,
+  "note": "claim only — GET /juge 200 is preview, not a receipt"
+}

@@ -42,9 +42,25 @@ Si une attaque passe, le label FAMILLE est cassé.
    Fixture : [examples/deny-token-mint.json](examples/deny-token-mint.json)
 13. **Unforge that signs** — `UNFORGE_SIGNS`. The sas stays private.
    Fixture : [examples/deny-unforge-signs.json](examples/deny-unforge-signs.json)
+14. **di+simule** — `CHSH_SOFTWARE_AS_DI`.
+   Fixture : [examples/deny-di-simule.json](examples/deny-di-simule.json)
+15. **trous fermés incomplets** — `LOOPHOLES_CLOSED_INCOMPLETE`.
+   Fixture : [examples/deny-loopholes-incomplete.json](examples/deny-loopholes-incomplete.json)
+16. **figure mineur** — `FIGURE_MINOR_OR_NO_END`.
+   Fixture : [examples/deny-figure-minor.json](examples/deny-figure-minor.json)
+17. **situs médical** — `SITUS_MEDICAL_OR_UNLICENSED`.
+   Fixture : [examples/deny-situs-medical.json](examples/deny-situs-medical.json)
+18. **transcript brut dans la carte** — `QUANTUM_IN_GIT`.
+   Fixture : [examples/deny-quantum-body.json](examples/deny-quantum-body.json)
+19. **Estoc dans le fichier** — `ESTOC_MERGE`.
+   Fixture : [examples/deny-estoc-claim.json](examples/deny-estoc-claim.json)
+20. **GET /juge 200 comme quittance** — `PREVIEW_AS_RECEIPT`.
+   Fixture : [examples/deny-juge-200-as-receipt.json](examples/deny-juge-200-as-receipt.json)
 
-Autres nies (tests, pas encore fixtures publiques) : di+simule,
-trous fermés incomplets, figure mineur, situs médical, 2e slug, QUANTUM sur Git.
+Autres nies (scan / tests, pas de fixture publique — le scan du dépôt
+refuserait un hôte extra) : 2e slug (`SECOND_SLUG`,
+`tests/fixtures/deny-second-slug.json`), `famille/site/`
+(`FAMILLE_SITE_TOUCHED`, `test_famille_site_touched_via_scan`).
 
 ```
 python3 garde.py deny --carte carte.json    # exit 0 allow | 2 deny

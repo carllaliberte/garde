@@ -66,7 +66,11 @@ Red fixtures (each must deny; CI globs `examples/deny-*.json`):
 `deny-epsilon-zero`, `deny-epsilon-missing`, `deny-photon-invente`,
 `deny-os-relabel-qkd`, `deny-horizon-slogan`, `deny-preview-quittance`,
 `deny-quantique-sans-bornes`, `deny-ufhy1-as-date`, `deny-token-mint`,
-`deny-unforge-signs`, plus flux steward reds (`deny-flux-*`).
+`deny-unforge-signs`, `deny-di-simule`, `deny-loopholes-incomplete`,
+`deny-figure-minor`, `deny-situs-medical`, `deny-quantum-body`,
+`deny-estoc-claim`, `deny-juge-200-as-receipt`, plus flux steward reds
+(`deny-flux-*`). `FAMILLE_SITE_TOUCHED` and `SECOND_SLUG` are scan /
+`tests/` probes (an extra host in `examples/` would trip the tree scan).
 See [JUGE.md](JUGE.md).
 
 Other protocol repos call this gate **without merging Git history**. See

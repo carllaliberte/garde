@@ -1,0 +1,8 @@
+{
+  "format": "temoin.v0",
+  "temoin_id": "TM-garde-body-deny",
+  "niveau": "aucun",
+  "simule": true,
+  "transcript": "raw-log-not-a-hash",
+  "note": "claim only — a raw transcript body in the claim must deny"
+}

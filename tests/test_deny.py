@@ -6,6 +6,7 @@ from __future__ import annotations
 import json
 import subprocess
 import sys
+import tempfile
 import unittest
 from datetime import date
 from pathlib import Path
@@ -13,7 +14,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from garde import CODES, REASONS, deny, deny_path  # noqa: E402
+from garde import CODES, REASONS, deny, deny_path, scan  # noqa: E402
 
 TODAY = date(2026, 9, 3)
 SHA = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
@@ -452,6 +453,20 @@ class DenyCriteria(unittest.TestCase):
             "PREVIEW_AS_RECEIPT",
         )
 
+    def test_juge_http_200_asserted_as_receipt(self) -> None:
+        must_deny(
+            {
+                "quelle": "os",
+                "temoin": "aucun",
+                "epsilon": 0.000001,
+                "horizon": "2099-12-31",
+                "path": "/juge",
+                "status": 200,
+                "assert": "quittance",
+            },
+            "PREVIEW_AS_RECEIPT",
+        )
+
     def test_preview_badge_asserted_as_receipt(self) -> None:
         must_deny(
             {
@@ -550,6 +565,19 @@ class HonestPreviewAndReceiptStayDistinct(unittest.TestCase):
         )
 
 
+class FamilleSiteTouched(unittest.TestCase):
+    def test_famille_site_touched_via_scan(self) -> None:
+        """Listed attack FAMILLE_SITE_TOUCHED — scan refuses famille/site/."""
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            path = root / "famille" / "site" / "index.html"
+            path.parent.mkdir(parents=True)
+            path.write_text("placeholder\n", encoding="utf-8")
+            verdict = scan(root)
+            self.assertEqual(verdict["decision"], "deny", verdict)
+            self.assertIn("FAMILLE_SITE_TOUCHED", verdict["codes"])
+
+
 class StewardRedFixtures(unittest.TestCase):
     """Attacks that must deny. If one passes, FAMILLE is broken."""
 
@@ -567,6 +595,13 @@ class StewardRedFixtures(unittest.TestCase):
         "deny-token-mint.json": "TOKEN_MINT_COIN",
         "deny-ufhy1-as-date.json": "HORIZON_DATE_INVALID",
         "deny-unforge-signs.json": "UNFORGE_SIGNS",
+        "deny-di-simule.json": "CHSH_SOFTWARE_AS_DI",
+        "deny-loopholes-incomplete.json": "LOOPHOLES_CLOSED_INCOMPLETE",
+        "deny-figure-minor.json": "FIGURE_MINOR_OR_NO_END",
+        "deny-situs-medical.json": "SITUS_MEDICAL_OR_UNLICENSED",
+        "deny-quantum-body.json": "QUANTUM_IN_GIT",
+        "deny-estoc-claim.json": "ESTOC_MERGE",
+        "deny-juge-200-as-receipt.json": "PREVIEW_AS_RECEIPT",
     }
 
     def test_red_fixtures_exist(self) -> None:

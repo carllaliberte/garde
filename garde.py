@@ -256,8 +256,28 @@ def _add(hits: list[str], code: str) -> None:
         hits.append(code)
 
 
+def _juge_http_ok_is_preview(obj: dict[str, Any]) -> bool:
+    """GET /juge HTTP 200 is a preview canal. It is not a receipt."""
+    status = obj.get("http_status")
+    if status is None:
+        status = obj.get("status_code")
+    if status is None:
+        raw = obj.get("status")
+        if raw not in PREVIEW_LABELS:
+            status = raw
+    if status not in (200, "200"):
+        return False
+    for key in ("path", "endpoint", "url", "route"):
+        val = _lower(obj.get(key))
+        if "juge" in val:
+            return True
+    return False
+
+
 def _is_preview_claim(obj: dict[str, Any]) -> bool:
     if obj.get("preview") is True:
+        return True
+    if _juge_http_ok_is_preview(obj):
         return True
     for key in ("badge", "status", "kind", "type", "role"):
         if _lower(obj.get(key)) in PREVIEW_LABELS:

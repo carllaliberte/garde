@@ -1,0 +1,6 @@
+{
+  "format": "mode.v0",
+  "mode": "classique",
+  "slugs": ["acorn-royal-dune-blend.grok.me", "other.grok.me"],
+  "note": "claim only — a second published slug must deny; kept under tests/ so scan skips extra hosts"
+}

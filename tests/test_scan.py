@@ -52,6 +52,25 @@ class ScanFixtures(unittest.TestCase):
             self.assertEqual(verdict["decision"], "deny")
             self.assertIn("FAMILLE_SITE_TOUCHED", verdict["codes"])
 
+    def test_famille_site_touched_via_scan(self) -> None:
+        """Listed attack FAMILLE_SITE_TOUCHED — scan refuses famille/site/."""
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            path = root / "famille" / "site" / "readme.txt"
+            path.parent.mkdir(parents=True)
+            path.write_text("placeholder\n", encoding="utf-8")
+            verdict = scan(root)
+            self.assertEqual(verdict["decision"], "deny", verdict)
+            self.assertIn("FAMILLE_SITE_TOUCHED", verdict["codes"])
+            self.assertTrue(
+                any(
+                    f.get("code") == "FAMILLE_SITE_TOUCHED"
+                    and "famille/site/" in f.get("path", "").replace("\\", "/")
+                    for f in verdict.get("findings", [])
+                ),
+                verdict,
+            )
+
     def test_extra_grok_host_in_config_denied(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
