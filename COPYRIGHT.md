@@ -20,6 +20,10 @@ repository are published under the MIT License. See [LICENSE](LICENSE).
 
 Forking the deny gate is not a QUANTUM license and not a formal verification.
 
+Three regimes: ARR private (acorn, unforge, filon-noeud) / MIT map (famille) / public rails (this deny gate: code licensed, names not granted).
+See NOTICE.
+Marks are not licensed by MIT.
+
 ## Notice
 
 This file is not legal advice. For a contract, a lawyer in Québec.
