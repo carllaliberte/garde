@@ -1,0 +1,8 @@
+{
+  "name": "garde",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/control-plane.test.mjs"
+  }
+}
