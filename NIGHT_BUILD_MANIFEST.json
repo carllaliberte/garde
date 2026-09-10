@@ -1,0 +1,49 @@
+{
+  "manifest_version": "1.0.0",
+  "project": "Acorn",
+  "doctrine_invariant": "Les certitudes ont une date de fin",
+  "observed_at": "2026-09-10T00:44:00.000Z",
+  "kind": "PREVIEW",
+  "state": "UNVERIFIED",
+  "receipt": false,
+  "live": false,
+  "authority": {
+    "human_operator": "Carl",
+    "mode": {
+      "HUMAN_WRITE": "ALLOWED",
+      "AI_WRITE": "DENIED",
+      "AI_MERGE": "DENIED"
+    }
+  },
+  "execution_summary": {
+    "phases_covered": [1, 2, 3, 4, 5],
+    "overnight_loop_status": "COMPLETED_SATURATION_USEFUL",
+    "note": "Saturation utile = plus de travail autorisé sans HOLD humain. Pas un squash. Pas LIVE.",
+    "integrity_checks": {
+      "schema_validation": "PASS",
+      "epsilon_margin_maintained": true,
+      "preview_receipt_isolation": "ENFORCED",
+      "pqc_opt_in_isolation": "VERIFIED_NO_V0_MUTATION",
+      "secrets_leak_audit": "CLEAN",
+      "auto_merge": false
+    },
+    "tests_measured": {
+      "famille": { "pr": 306, "pass": 248, "fail": 0 },
+      "acorn-juge": { "pr": 31, "pass": 93, "fail": 0 },
+      "garde": { "pr": 21, "pass": 2, "fail": 0 },
+      "ancrage-protocol": { "pr": 8, "pass": 2, "fail": 0 }
+    }
+  },
+  "deliverables_preview": {
+    "famille": [
+      "scripts/provenance.mjs",
+      "scripts/taxonomy.mjs",
+      "schema/provenance.v0.json",
+      ".gitlab-ci.yml"
+    ],
+    "acorn-juge": ["src/network-sweep.mjs", "src/long-run-loop.mjs"],
+    "garde": ["src/ui/control-plane.mjs", "NIGHT_BUILD_MANIFEST.json"],
+    "ancrage-protocol": ["src/crypto-rail.mjs"]
+  },
+  "next_action": "Awaiting human decision lock (Squash & Merge). Carl only."
+}
