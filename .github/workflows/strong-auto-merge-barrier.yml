@@ -1,0 +1,58 @@
+name: Strong Auto-Merge Barrier
+
+on:
+  pull_request:
+    branches: [main]
+  merge_group:
+    branches: [main]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  barrier:
+    name: strong-auto-merge-barrier
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reject obvious secret material
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git grep -nEI '(^|[^A-Za-z])(sk-[A-Za-z0-9_-]{20,}|ghp_[A-Za-z0-9]{20,}|BEGIN (RSA|OPENSSH|EC|PRIVATE) KEY|xox[baprs]-[A-Za-z0-9-]{20,})' -- . ':!package-lock.json'; then
+            echo 'Potential credential material detected.' >&2
+            exit 1
+          fi
+      - name: Validate repository contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f LICENSE
+          test -f README.md
+          test -f .github/CODEOWNERS
+          grep -q '@carllaliberte' .github/CODEOWNERS
+      - name: Run project tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm test && python -m pytest -q
+      - name: Critical-path human gate
+        if: ${{ github.event_name == 'pull_request' }}
+        shell: bash
+        env:
+          CRITICAL_PATHS: '/src/\n/tests/\n/.github/workflows/\n/.github/swarm/'
+        run: |
+          set -euo pipefail
+          changed="$(git diff --name-only "origin/${{ github.base_ref }}...HEAD")"
+          critical=0
+          while IFS= read -r f; do
+            [ -z "$f" ] && continue
+            while IFS= read -r prefix; do
+              [ -z "$prefix" ] && continue
+              if [[ "/$f" == "$prefix"* ]]; then critical=1; fi
+            done <<< "$CRITICAL_PATHS"
+          done <<< "$changed"
+          if [ "$critical" -eq 1 ]; then echo 'Critical paths changed. CODEOWNERS requires @carllaliberte approval before merge.'; else echo 'No critical paths changed.'; fi
+      - name: Barrier status
+        run: echo 'STRONG_BARRIER=PASS'
